@@ -1,5 +1,5 @@
 
-package net.ddns.rkdawenterprises;
+package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -7,9 +7,6 @@ import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.TypeAdapter;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
 
 public class Weather_data
 {
@@ -24,11 +21,11 @@ public class Weather_data
                                                        .setPrettyPrinting()
                                                        .create();
 
-    Weather_data()
+    public Weather_data()
     {
     }
 
-    void parse_packet( Type type,
+    public void parse_packet( Type type,
                        byte[] packet,
                        int length )
             throws IllegalArgumentException, ArithmeticException
@@ -716,20 +713,20 @@ public class Weather_data
     /**
      * The time the weather data was retrieved as UTC.
      */
-    String time = "N/A";
+    public String time = "N/A";
 
     /**
      * Station information acquired during configuration.
      */
-    int wrd = Integer.MAX_VALUE;
-    int total_packets_received = Integer.MAX_VALUE;
-    int total_packets_missed = Integer.MAX_VALUE;
-    int number_of_resynchronizations = Integer.MAX_VALUE;
-    int largest_number_packets_received_in_a_row = Integer.MAX_VALUE;
-    int number_of_CRC_errors_detected = Integer.MAX_VALUE;
-    String firmware_date_code = "N/A";
-    String firmware_version = "N/A";
-    String DID = "N/A";
+    public int wrd = Integer.MAX_VALUE;
+    public int total_packets_received = Integer.MAX_VALUE;
+    public int total_packets_missed = Integer.MAX_VALUE;
+    public int number_of_resynchronizations = Integer.MAX_VALUE;
+    public int largest_number_packets_received_in_a_row = Integer.MAX_VALUE;
+    public int number_of_CRC_errors_detected = Integer.MAX_VALUE;
+    public String firmware_date_code = "N/A";
+    public String firmware_version = "N/A";
+    public String DID = "N/A";
 
     /**
      * Measurement units
@@ -864,7 +861,7 @@ public class Weather_data
      *
      * @return The converted value.
      */
-    static short bytes_to_short( byte[] buffer,
+    public static short bytes_to_short( byte[] buffer,
                                  int index )
     {
         return (short)( ( ( buffer[index + 1] & 0xFF ) << 8 ) | ( buffer[index] & 0xFF ) );

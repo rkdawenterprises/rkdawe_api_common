@@ -1,5 +1,5 @@
 
-package net.ddns.rkdawenterprises;
+package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -58,6 +58,8 @@ import org.apache.commons.io.FileUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import net.ddns.rkdawenterprises.rkdawe_webapp.User;
 
 public class Utilities
 {
@@ -903,17 +905,17 @@ public class Utilities
      */
     public static final class tm
     {
-        int tm_sec;
-        int tm_min;
-        int tm_hour;
-        int tm_mday;
-        int tm_mon;
-        int tm_year;
-        int tm_wday;
-        int tm_yday;
-        Boolean tm_isdst;
-        long tm_gmtoff;
-        String tm_zone;
+        public int tm_sec;
+        public int tm_min;
+        public int tm_hour;
+        public int tm_mday;
+        public int tm_mon;
+        public int tm_year;
+        public int tm_wday;
+        public int tm_yday;
+        public Boolean tm_isdst;
+        public long tm_gmtoff;
+        public String tm_zone;
     }
 
     public static tm get_local_tm()

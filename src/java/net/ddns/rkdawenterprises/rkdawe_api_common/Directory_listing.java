@@ -1,4 +1,4 @@
-package net.ddns.rkdawenterprises;
+package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.io.File;
 import java.io.IOException;
@@ -45,6 +45,14 @@ public final class Directory_listing
                                            .withZoneSameInstant( ZoneId.of( "UTC" ) );
         }
     }
+
+    public static final String WEATHER_HISTORY_FILENAME = "weather_history_0.csv";
+    public static final String WEATHER_HISTORY_FILENAME_REGEX = "^weather_history_(\\d+)\\.csv$";
+    public static final String WEATHER_HISTORY_DIRECTORY = "/var/lib/rkdaweapi/";
+    public static final String WEATHER_HISTORY_PATH = WEATHER_HISTORY_DIRECTORY + WEATHER_HISTORY_FILENAME;
+    public static final int MAX_HISTORY_FILE_SIZE_KiB = 6 * 1024;
+    public static final int MAX_HISTORY_FILES = 10;
+    public static final String COMPRESSED_WEATHER_HISTORY_FILENAME = "weather_history";
 
     List< Directory_listing.File_info > m_file_list = new ArrayList< Directory_listing.File_info >( 16 );
 
