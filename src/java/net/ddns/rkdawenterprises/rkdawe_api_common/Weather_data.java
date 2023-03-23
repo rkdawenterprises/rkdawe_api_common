@@ -325,7 +325,9 @@ public class Weather_data
                 + "\n" );
         builder.append( "[\n" );
 
-        builder.append( "    time=" );
+        builder.append( "    system_name=" );
+        builder.append( system_name );
+        builder.append( ",\n    time=" );
         builder.append( time );
 
         builder.append( ",\n    wrd=" );
@@ -711,6 +713,11 @@ public class Weather_data
     }
 
     /**
+     * The name of the weather station.
+     */
+    public String system_name = "Weather Station Donna @ Hot Springs, AR";
+
+    /**
      * The time the weather data was retrieved as UTC.
      */
     public String time = "N/A";
@@ -960,7 +967,7 @@ public class Weather_data
         }
         catch( com.google.gson.JsonSyntaxException exception )
         {
-            System.out.println( "Bad data format for File_info: " + exception );
+            System.out.println( "Bad data format for Weather_data: " + exception );
             System.out.println( ">>>" + string_JSON + "<<<" );
         }
 
