@@ -3,6 +3,8 @@ package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.google.gson.Gson;
@@ -25,10 +27,10 @@ public class Weather_data
     {
     }
 
-    @SuppressWarnings("unused")
-    public void parse_packet(Type type,
-                             byte[] packet,
-                             int length )
+    @SuppressWarnings( "unused" )
+    public void parse_packet( Type type,
+                              byte[] packet,
+                              int length )
             throws IllegalArgumentException, ArithmeticException
     {
         if( type == Type.LOOP2 )
@@ -322,7 +324,8 @@ public class Weather_data
         builder.append( getClass().getName() );
         builder.append( "@" );
         builder.append( String.format( "0x%08X",
-                                       hashCode() ) + "\n" );
+                                       hashCode() )
+                + "\n" );
         builder.append( "[\n" );
 
         builder.append( "    system_name=" );
@@ -869,7 +872,7 @@ public class Weather_data
      * @return The converted value.
      */
     public static short bytes_to_short( byte[] buffer,
-                                 int index )
+                                        int index )
     {
         return (short)( ( ( buffer[index + 1] & 0xFF ) << 8 ) | ( buffer[index] & 0xFF ) );
     }
@@ -890,14 +893,15 @@ public class Weather_data
     {
         short bits = bytes_to_short( buffer,
                                      index );
-        LocalDate now = LocalDate.now();
-        LocalDateTime date_time_start = now.atStartOfDay();
         double hours = Math.floor( bits / 100 );
         double minutes = bits % 100;
-        LocalDateTime date_time = date_time_start.plusHours( (long)hours )
-                                                 .plusMinutes( (long)minutes );
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern( "hh:mm a" );
-        return( date_time.format( formatter ) );
+
+        return( DateTimeFormatter.ofPattern( "yyyy-MM-dd'T'HH:mm:ss'Z'" )
+                                 .format( LocalDate.now()
+                                                   .atStartOfDay()
+                                                   .plusHours( (long)hours )
+                                                   .plusMinutes( (long)minutes )
+                                                   .atZone( ZoneId.of( "UTC" ) ) ) );
     }
 
     public static String get_history_record_columns()
