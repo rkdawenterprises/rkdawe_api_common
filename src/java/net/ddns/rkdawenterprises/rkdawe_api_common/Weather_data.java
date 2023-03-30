@@ -25,16 +25,17 @@ public class Weather_data
     {
     }
 
-    public void parse_packet( Type type,
-                       byte[] packet,
-                       int length )
+    @SuppressWarnings("unused")
+    public void parse_packet(Type type,
+                             byte[] packet,
+                             int length )
             throws IllegalArgumentException, ArithmeticException
     {
         if( type == Type.LOOP2 )
         {
             if( length != 99 ) throw new IllegalArgumentException( "Incorrect packet size" );
 
-            if( ( packet[00] != 'L' ) || ( packet[01] != 'O' ) || ( packet[02] != 'O' ) || ( packet[04] != 0x01 )
+            if( ( packet[0] != 'L' ) || ( packet[1] != 'O' ) || ( packet[2] != 'O' ) || ( packet[4] != 0x01 )
                     || ( packet[95] != 0x0A ) || ( packet[96] != 0x0D ) )
             {
                 throw new IllegalArgumentException( "Invalid packet data" );
@@ -129,7 +130,7 @@ public class Weather_data
         {
             if( length != 99 ) throw new IllegalArgumentException( "Incorrect packet size" );
 
-            if( ( packet[00] != 'L' ) || ( packet[01] != 'O' ) || ( packet[02] != 'O' ) || ( packet[04] != 0x00 )
+            if( ( packet[0] != 'L' ) || ( packet[1] != 'O' ) || ( packet[2] != 'O' ) || ( packet[4] != 0x00 )
                     || ( packet[95] != 0x0A ) || ( packet[96] != 0x0D ) )
             {
                 throw new IllegalArgumentException( "Invalid packet data" );
@@ -321,8 +322,7 @@ public class Weather_data
         builder.append( getClass().getName() );
         builder.append( "@" );
         builder.append( String.format( "0x%08X",
-                                       hashCode() )
-                + "\n" );
+                                       hashCode() ) + "\n" );
         builder.append( "[\n" );
 
         builder.append( "    system_name=" );
@@ -349,7 +349,7 @@ public class Weather_data
         builder.append( ",\n    DID=" );
         builder.append( DID );
 
-        /**
+        /*
          * Loop2 packet data.
          */
         builder.append( ",\n    bar_trend=" );
@@ -442,7 +442,7 @@ public class Weather_data
         builder.append( last_twenty_four_hour_rain );
         builder.append( rain_units );
 
-        /**
+        /*
          * Loop packet data.
          */
         builder.append( ",\n    month_rain=" );
@@ -460,7 +460,7 @@ public class Weather_data
         builder.append( console_battery_voltage );
         builder.append( console_battery_voltage_units );
 
-        /**
+        /*
          * HILOWS packet data.
          */
         builder.append( ",\n    daily_low_barometer=" );
@@ -738,127 +738,127 @@ public class Weather_data
     /**
      * Measurement units
      */
-    String barometer_units = " in Hg";
-    String temperature_units = "&#x00B0;";
-    String humidity_units = "%";
-    String wind_speed_units = " MPH";
-    String wind_direction_units = "&#x00B0;";
-    String rain_units = " in";
-    String rain_rate_units = " in/hr";
-    String bar_trend = "N/A";
+    public String barometer_units = " in Hg";
+    public String temperature_units = "&#x00B0;F";
+    public String humidity_units = "%";
+    public String wind_speed_units = " MPH";
+    public String wind_direction_units = "&#x00B0;";
+    public String rain_units = " in";
+    public String rain_rate_units = " in/hr";
+    public String bar_trend = "N/A";
 
     /**
      * Loop2 packet data.
      */
-    double barometer = Double.MAX_VALUE;
-    double inside_temperature = Double.MAX_VALUE;
-    int inside_humidity = Integer.MAX_VALUE;
-    double outside_temperature = Double.MAX_VALUE;
-    int wind_speed = Integer.MAX_VALUE;
-    int wind_direction = Integer.MAX_VALUE;
-    double ten_min_avg_wind_speed = Double.MAX_VALUE;
-    double two_min_avg_wind_speed = Double.MAX_VALUE;
-    double ten_min_wind_gust = Double.MAX_VALUE;
-    int wind_direction_of_ten_min_wind_gust = Integer.MAX_VALUE;
-    int dew_point = Integer.MAX_VALUE;
-    int outside_humidity = Integer.MAX_VALUE;
-    int heat_index = Integer.MAX_VALUE;
-    int wind_chill = Integer.MAX_VALUE;
-    double rain_rate = Double.MAX_VALUE;
-    double storm_rain = Double.MAX_VALUE;
-    String start_date_of_current_storm = "N/A";
-    double daily_rain = Double.MAX_VALUE;
-    double last_fifteen_min_rain = Double.MAX_VALUE;
-    double last_hour_rain = Double.MAX_VALUE;
-    double daily_et = Double.MAX_VALUE;
-    double last_twenty_four_hour_rain = Double.MAX_VALUE;
+    public double barometer = Double.MAX_VALUE;
+    public double inside_temperature = Double.MAX_VALUE;
+    public int inside_humidity = Integer.MAX_VALUE;
+    public double outside_temperature = Double.MAX_VALUE;
+    public int wind_speed = Integer.MAX_VALUE;
+    public int wind_direction = Integer.MAX_VALUE;
+    public double ten_min_avg_wind_speed = Double.MAX_VALUE;
+    public double two_min_avg_wind_speed = Double.MAX_VALUE;
+    public double ten_min_wind_gust = Double.MAX_VALUE;
+    public int wind_direction_of_ten_min_wind_gust = Integer.MAX_VALUE;
+    public int dew_point = Integer.MAX_VALUE;
+    public int outside_humidity = Integer.MAX_VALUE;
+    public int heat_index = Integer.MAX_VALUE;
+    public int wind_chill = Integer.MAX_VALUE;
+    public double rain_rate = Double.MAX_VALUE;
+    public double storm_rain = Double.MAX_VALUE;
+    public String start_date_of_current_storm = "N/A";
+    public double daily_rain = Double.MAX_VALUE;
+    public double last_fifteen_min_rain = Double.MAX_VALUE;
+    public double last_hour_rain = Double.MAX_VALUE;
+    public double daily_et = Double.MAX_VALUE;
+    public double last_twenty_four_hour_rain = Double.MAX_VALUE;
 
     /**
      * Loop packet data.
      */
-    double month_rain = Double.MAX_VALUE;
-    double year_rain = Double.MAX_VALUE;
-    String transmitter_battery_status = "N/A";
-    double console_battery_voltage = Double.MAX_VALUE;
-    String console_battery_voltage_units = " Volts";
+    public double month_rain = Double.MAX_VALUE;
+    public double year_rain = Double.MAX_VALUE;
+    public String transmitter_battery_status = "N/A";
+    public double console_battery_voltage = Double.MAX_VALUE;
+    public String console_battery_voltage_units = " Volts";
 
     /**
      * HILOWS packet data.
      */
-    double daily_low_barometer = Double.MAX_VALUE;
-    double daily_high_barometer = Double.MAX_VALUE;
-    double month_low_bar = Double.MAX_VALUE;
-    double month_high_bar = Double.MAX_VALUE;
-    double year_low_barometer = Double.MAX_VALUE;
-    double year_high_barometer = Double.MAX_VALUE;
-    String time_of_day_low_bar = "N/A";
-    String time_of_day_high_bar = "N/A";
+    public double daily_low_barometer = Double.MAX_VALUE;
+    public double daily_high_barometer = Double.MAX_VALUE;
+    public double month_low_bar = Double.MAX_VALUE;
+    public double month_high_bar = Double.MAX_VALUE;
+    public double year_low_barometer = Double.MAX_VALUE;
+    public double year_high_barometer = Double.MAX_VALUE;
+    public String time_of_day_low_bar = "N/A";
+    public String time_of_day_high_bar = "N/A";
 
-    int daily_hi_wind_speed = Integer.MAX_VALUE;
-    String time_of_hi_speed = "N/A";
-    int month_hi_wind_speed = Integer.MAX_VALUE;
-    int year_hi_wind_speed = Integer.MAX_VALUE;
+    public int daily_hi_wind_speed = Integer.MAX_VALUE;
+    public String time_of_hi_speed = "N/A";
+    public int month_hi_wind_speed = Integer.MAX_VALUE;
+    public int year_hi_wind_speed = Integer.MAX_VALUE;
 
-    double day_hi_inside_temp = Double.MAX_VALUE;
-    double day_low_inside_temp = Double.MAX_VALUE;
-    String time_day_hi_in_temp = "N/A";
-    String time_day_low_in_temp = "N/A";
-    double month_low_in_temp = Double.MAX_VALUE;
-    double month_hi_in_temp = Double.MAX_VALUE;
-    double year_low_in_temp = Double.MAX_VALUE;
-    double year_hi_in_temp = Double.MAX_VALUE;
+    public double day_hi_inside_temp = Double.MAX_VALUE;
+    public double day_low_inside_temp = Double.MAX_VALUE;
+    public String time_day_hi_in_temp = "N/A";
+    public String time_day_low_in_temp = "N/A";
+    public double month_low_in_temp = Double.MAX_VALUE;
+    public double month_hi_in_temp = Double.MAX_VALUE;
+    public double year_low_in_temp = Double.MAX_VALUE;
+    public double year_hi_in_temp = Double.MAX_VALUE;
 
-    int day_hi_in_hum = Integer.MAX_VALUE;
-    int day_low_in_hum = Integer.MAX_VALUE;
-    String time_day_hi_in_hum = "N/A";
-    String time_day_low_in_hum = "N/A";
-    int month_hi_in_hum = Integer.MAX_VALUE;
-    int month_low_in_hum = Integer.MAX_VALUE;
-    int year_hi_in_hum = Integer.MAX_VALUE;
-    int year_low_in_hum = Integer.MAX_VALUE;
+    public int day_hi_in_hum = Integer.MAX_VALUE;
+    public int day_low_in_hum = Integer.MAX_VALUE;
+    public String time_day_hi_in_hum = "N/A";
+    public String time_day_low_in_hum = "N/A";
+    public int month_hi_in_hum = Integer.MAX_VALUE;
+    public int month_low_in_hum = Integer.MAX_VALUE;
+    public int year_hi_in_hum = Integer.MAX_VALUE;
+    public int year_low_in_hum = Integer.MAX_VALUE;
 
-    double day_low_out_temp = Double.MAX_VALUE;
-    double day_hi_out_temp = Double.MAX_VALUE;
-    String time_day_low_out_temp = "N/A";
-    String time_day_hi_out_temp = "N/A";
-    double month_hi_out_temp = Double.MAX_VALUE;
-    double month_low_out_temp = Double.MAX_VALUE;
-    double year_hi_out_temp = Double.MAX_VALUE;
-    double year_low_out_temp = Double.MAX_VALUE;
+    public double day_low_out_temp = Double.MAX_VALUE;
+    public double day_hi_out_temp = Double.MAX_VALUE;
+    public String time_day_low_out_temp = "N/A";
+    public String time_day_hi_out_temp = "N/A";
+    public double month_hi_out_temp = Double.MAX_VALUE;
+    public double month_low_out_temp = Double.MAX_VALUE;
+    public double year_hi_out_temp = Double.MAX_VALUE;
+    public double year_low_out_temp = Double.MAX_VALUE;
 
-    int day_low_dew_point = Integer.MAX_VALUE;
-    int day_hi_dew_point = Integer.MAX_VALUE;
-    String time_day_low_dew_point = "N/A";
-    String time_day_hi_dew_point = "N/A";
-    int month_hi_dew_point = Integer.MAX_VALUE;
-    int month_low_dew_point = Integer.MAX_VALUE;
-    int year_hi_dew_point = Integer.MAX_VALUE;
-    int year_low_dew_point = Integer.MAX_VALUE;
+    public int day_low_dew_point = Integer.MAX_VALUE;
+    public int day_hi_dew_point = Integer.MAX_VALUE;
+    public String time_day_low_dew_point = "N/A";
+    public String time_day_hi_dew_point = "N/A";
+    public int month_hi_dew_point = Integer.MAX_VALUE;
+    public int month_low_dew_point = Integer.MAX_VALUE;
+    public int year_hi_dew_point = Integer.MAX_VALUE;
+    public int year_low_dew_point = Integer.MAX_VALUE;
 
-    int day_low_wind_chill = Integer.MAX_VALUE;
-    String time_day_low_chill = "N/A";
-    int month_low_wind_chill = Integer.MAX_VALUE;
-    int year_low_wind_chill = Integer.MAX_VALUE;
+    public int day_low_wind_chill = Integer.MAX_VALUE;
+    public String time_day_low_chill = "N/A";
+    public int month_low_wind_chill = Integer.MAX_VALUE;
+    public int year_low_wind_chill = Integer.MAX_VALUE;
 
-    int day_high_heat = Integer.MAX_VALUE;
-    String time_of_day_high_heat = "N/A";
-    int month_high_heat = Integer.MAX_VALUE;
-    int year_high_heat = Integer.MAX_VALUE;
+    public int day_high_heat = Integer.MAX_VALUE;
+    public String time_of_day_high_heat = "N/A";
+    public int month_high_heat = Integer.MAX_VALUE;
+    public int year_high_heat = Integer.MAX_VALUE;
 
-    double day_high_rain_rate = Double.MAX_VALUE;
-    String time_of_day_high_rain_rate = "N/A";
-    double hour_high_rain_rate = Double.MAX_VALUE;
-    double month_high_rain_rate = Double.MAX_VALUE;
-    double year_high_rain_rate = Double.MAX_VALUE;
+    public double day_high_rain_rate = Double.MAX_VALUE;
+    public String time_of_day_high_rain_rate = "N/A";
+    public double hour_high_rain_rate = Double.MAX_VALUE;
+    public double month_high_rain_rate = Double.MAX_VALUE;
+    public double year_high_rain_rate = Double.MAX_VALUE;
 
-    int day_low_humidity = Integer.MAX_VALUE;
-    int day_hi_humidity = Integer.MAX_VALUE;
-    String time_day_low_humidity = "N/A";
-    String time_day_hi_humidity = "N/A";
-    int month_hi_humidity = Integer.MAX_VALUE;
-    int month_low_humidity = Integer.MAX_VALUE;
-    int year_hi_humidity = Integer.MAX_VALUE;
-    int year_low_humidity = Integer.MAX_VALUE;
+    public int day_low_humidity = Integer.MAX_VALUE;
+    public int day_hi_humidity = Integer.MAX_VALUE;
+    public String time_day_low_humidity = "N/A";
+    public String time_day_hi_humidity = "N/A";
+    public int month_hi_humidity = Integer.MAX_VALUE;
+    public int month_low_humidity = Integer.MAX_VALUE;
+    public int year_hi_humidity = Integer.MAX_VALUE;
+    public int year_low_humidity = Integer.MAX_VALUE;
 
     /**
      * Converts two bytes to a signed short value.
