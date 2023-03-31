@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.TimeZone;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -896,12 +897,18 @@ public class Weather_data
         double hours = Math.floor( bits / 100 );
         double minutes = bits % 100;
 
+        ZonedDateTime time_at_local = LocalDate.now()
+                                               .atStartOfDay()
+                                               .plusHours( (long)hours )
+                                               .plusMinutes( (long)minutes )
+                                               .atZone( TimeZone.getDefault()
+                                                                .toZoneId() );
+
+        ZonedDateTime time_at_zulu = ZonedDateTime.ofInstant( time_at_local.toInstant(),
+                                                              ZoneId.of( "UTC" ) );
+
         return( DateTimeFormatter.ofPattern( "yyyy-MM-dd'T'HH:mm:ss'Z'" )
-                                 .format( LocalDate.now()
-                                                   .atStartOfDay()
-                                                   .plusHours( (long)hours )
-                                                   .plusMinutes( (long)minutes )
-                                                   .atZone( ZoneId.of( "UTC" ) ) ) );
+                                 .format( time_at_zulu ) );
     }
 
     public static String get_history_record_columns()
