@@ -390,7 +390,7 @@ public class Utilities
         if( x != 0 )
         {
             if( line_chars.length() > 0 ) System.out.printf( "%s\"%s\"%n",
-                                                             "   ".repeat( pitch - x ),
+                                                             repeat("   ", pitch - x ),
                                                              line_chars );
             line_chars = "";
         }
