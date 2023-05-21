@@ -22,12 +22,16 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.text.DecimalFormat;
 import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalField;
 import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -563,5 +567,27 @@ public class Utilities
         local_tm.tm_yday = system_now.getDayOfYear() - 1;
 
         return local_tm;
+    }
+
+    public static String convert_time_UTC_to_local( String time_UTC, String pattern )
+    {
+        return DateTimeFormatter.ofPattern( pattern )
+            .format( convert_time_UTC_to_local( time_UTC ) );
+    }
+
+    public static ZonedDateTime convert_time_UTC_to_local( String time_UTC )
+    {
+        return ZonedDateTime.parse(time_UTC).withZoneSameInstant(ZoneId.of(TimeZone.getDefault().getID()));
+    }
+
+    public static ZonedDateTime convert_timestamp_to_local(long timestamp_ms, String zone)
+    {
+        return ZonedDateTime.ofInstant(Instant.ofEpochMilli(timestamp_ms), ZoneId.of(zone));
+    }
+
+    public static ZonedDateTime convert_timestamp_to_UTC(long timestamp_ms, String zone)
+    {
+        return (ZonedDateTime.ofInstant(Instant.ofEpochMilli(timestamp_ms), ZoneId.of(zone)))
+                .withZoneSameInstant(ZoneId.of("UTC"));
     }
 }
