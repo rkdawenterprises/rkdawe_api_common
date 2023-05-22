@@ -989,4 +989,59 @@ public class Weather_data
     {
         return serialize_to_JSON( this );
     }
+
+    /**
+     * Calculates the heat index according to the US National Weather Service.
+     * 
+     * @param temperature The surface air temperature in degrees Fahrenheit.
+     * @param humidity The relative humidity in percent.
+     * @return The heat index.
+     */
+    public static double calculate_heat_index(double temperature, double humidity)
+    {
+        if(temperature <= 40) return temperature;
+
+        double heat_index = 0.5 * (temperature + 61 + ((temperature - 68) * 1.2) + (humidity * 0.094));
+
+        if(heat_index > 79)
+        {
+            heat_index = -42.379
+                + (2.04901523 * temperature)
+                + (10.14333127 * humidity)
+                - (0.22475541 * temperature * humidity)
+                - (0.00683783 * temperature * temperature)
+                - (0.05481717 * humidity * humidity)
+                + (0.00122874 * temperature * temperature * humidity)
+                + (0.00085282 * temperature * humidity * humidity)
+                - (0.00000199 * temperature * temperature * humidity * humidity);
+
+            if((humidity < 13) && (temperature >= 80) && (temperature <= 112))
+            {
+                heat_index -= ((13 - humidity) / 4)
+                    * Math.sqrt((17 - Math.abs(temperature - 95)) / 17);
+            }
+            else if((humidity > 85) && (temperature >= 80) && (temperature <= 87))
+            {
+                heat_index += ((humidity - 85) / 10) * ((87 - temperature) / 5);
+            }
+        }
+
+        return heat_index;
+    }
+
+    /**
+     * Calculates the wind chill according to the US National Weather Service.
+     * 
+     * @param temperature The surface air temperature in degrees Fahrenheit.
+     * @param wind_speed The surface wind speed in MPH.
+     * @return
+     */
+    public static double calculate_wind_chill(double temperature, double wind_speed)
+    {
+        if((temperature > 50) || (wind_speed <= 3)) return temperature;
+
+        return 35.74 + (0.6215 * temperature)
+            - (35.75 * Math.pow(wind_speed, 0.16))
+            + (0.4275 * temperature * Math.pow(wind_speed, 0.16));
+    }
 }
