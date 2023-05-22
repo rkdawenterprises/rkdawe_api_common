@@ -2,7 +2,6 @@
 package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
@@ -28,7 +27,6 @@ public class Weather_data
     {
     }
 
-    @SuppressWarnings( "unused" )
     public void parse_packet( Type type,
                               byte[] packet,
                               int length )
@@ -333,6 +331,10 @@ public class Weather_data
         builder.append( system_name );
         builder.append( ",\n    time=" );
         builder.append( time );
+        builder.append( ",\n    heat_index_derived=" );
+        builder.append( heat_index_derived );
+        builder.append( ",\n    wind_chill_derived=" );
+        builder.append( wind_chill_derived );
 
         builder.append( ",\n    wrd=" );
         builder.append( wrd );
@@ -725,6 +727,12 @@ public class Weather_data
      * The time the weather data was retrieved as UTC.
      */
     public String time = "N/A";
+
+    /**
+     * Calculated heat-index and wind-chill.
+     */
+    public double heat_index_derived = Double.MAX_VALUE;
+    public double wind_chill_derived = Double.MAX_VALUE;
 
     /**
      * Station information acquired during configuration.
