@@ -750,13 +750,13 @@ public class Weather_data
     /**
      * Measurement units
      */
-    public String barometer_units = " in Hg";
+    public String barometer_units = "in Hg";
     public String temperature_units = "&#x00B0;F";
     public String humidity_units = "%";
-    public String wind_speed_units = " MPH";
+    public String wind_speed_units = "MPH";
     public String wind_direction_units = "&#x00B0;";
-    public String rain_units = " in";
-    public String rain_rate_units = " in/hr";
+    public String rain_units = "in";
+    public String rain_rate_units = "in/hr";
     public String bar_trend = "N/A";
 
     /**
