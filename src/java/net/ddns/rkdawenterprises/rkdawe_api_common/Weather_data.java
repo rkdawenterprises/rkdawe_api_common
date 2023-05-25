@@ -758,6 +758,7 @@ public class Weather_data
     public String rain_units = "in";
     public String rain_rate_units = "in/hr";
     public String bar_trend = "N/A";
+    public String console_battery_voltage_units = "Volts";
 
     /**
      * Loop2 packet data.
@@ -792,7 +793,6 @@ public class Weather_data
     public double year_rain = Double.MAX_VALUE;
     public String transmitter_battery_status = "N/A";
     public double console_battery_voltage = Double.MAX_VALUE;
-    public String console_battery_voltage_units = " Volts";
 
     /**
      * HILOWS packet data.
