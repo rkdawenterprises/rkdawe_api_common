@@ -1,4 +1,20 @@
 
+/*
+ * Copyright (c) 2019-2023 RKDAW Enterprises and Ralph Williamson.
+ *       email: rkdawenterprises@gmail.com
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.ddns.rkdawenterprises.rkdawe_api_common;
 
 import java.time.LocalDate;
@@ -10,6 +26,10 @@ import java.util.TimeZone;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+/**
+ * Weather data from Davis Vantage Vue weather station serial API.
+ * Has methods to decode and parse the packets transmitted from the station.
+ */
 public class Weather_data
 {
     public enum Type
@@ -315,6 +335,560 @@ public class Weather_data
         }
     }
 
+    public String to_display_TSV_string()
+    {
+        StringBuilder builder = new StringBuilder();
+
+        builder.append( "system_name\t" );
+        builder.append( system_name );
+        builder.append( "\n" );
+
+        builder.append( "time\t" );
+        builder.append( time );
+        builder.append( "\n" );
+
+        /*
+         * Temperatures
+         */
+
+        builder.append( "outside_temperature\t" );
+        builder.append( outside_temperature );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "day_low_out_temp\t" );
+        builder.append( day_low_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_out_temp\t" );
+        builder.append( time_day_low_out_temp );
+        builder.append( "\n" );
+
+        builder.append( "day_hi_out_temp\t" );
+        builder.append( day_hi_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_out_temp\t" );
+        builder.append( time_day_hi_out_temp );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_out_temp\t" );
+        builder.append( month_hi_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "month_low_out_temp\t" );
+        builder.append( month_low_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_out_temp\t" );
+        builder.append( year_hi_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_out_temp\t" );
+        builder.append( year_low_out_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "inside_temperature\t" );
+        builder.append( inside_temperature );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "day_hi_inside_temp\t" );
+        builder.append( day_hi_inside_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_in_temp\t" );
+        builder.append( time_day_hi_in_temp );
+        builder.append( "\n" );
+
+        builder.append( "day_low_inside_temp\t" );
+        builder.append( day_low_inside_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_in_temp\t" );
+        builder.append( time_day_low_in_temp );
+        builder.append( "\n" );
+
+        builder.append( "month_low_in_temp\t" );
+        builder.append( month_low_in_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_in_temp\t" );
+        builder.append( month_hi_in_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_in_temp\t" );
+        builder.append( year_low_in_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_in_temp\t" );
+        builder.append( year_hi_in_temp );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        /*
+         * Humidity
+         */
+
+        builder.append( "outside_humidity\t" );
+        builder.append( outside_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "day_low_humidity\t" );
+        builder.append( day_low_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_humidity\t" );
+        builder.append( time_day_low_humidity );
+        builder.append( "\n" );
+
+        builder.append( "day_hi_humidity\t" );
+        builder.append( day_hi_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_humidity\t" );
+        builder.append( time_day_hi_humidity );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_humidity\t" );
+        builder.append( month_hi_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "month_low_humidity\t" );
+        builder.append( month_low_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_humidity\t" );
+        builder.append( year_hi_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_humidity\t" );
+        builder.append( year_low_humidity );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "dew_point\t" );
+        builder.append( dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "heat_index\t" );
+        builder.append( heat_index );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "heat_index_derived\t" );
+        builder.append( heat_index_derived );
+        builder.append( "\n" );
+
+        builder.append( "day_high_heat\t" );
+        builder.append( day_high_heat );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_of_day_high_heat\t" );
+        builder.append( time_of_day_high_heat );
+        builder.append( "\n" );
+
+        builder.append( "month_high_heat\t" );
+        builder.append( month_high_heat );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_high_heat\t" );
+        builder.append( year_high_heat );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "day_low_dew_point\t" );
+        builder.append( day_low_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_dew_point\t" );
+        builder.append( time_day_low_dew_point );
+        builder.append( "\n" );
+
+        builder.append( "day_hi_dew_point\t" );
+        builder.append( day_hi_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_dew_point\t" );
+        builder.append( time_day_hi_dew_point );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_dew_point\t" );
+        builder.append( month_hi_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "month_low_dew_point\t" );
+        builder.append( month_low_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_dew_point\t" );
+        builder.append( year_hi_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_dew_point\t" );
+        builder.append( year_low_dew_point );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "inside_humidity\t" );
+        builder.append( inside_humidity );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "day_hi_in_hum\t" );
+        builder.append( day_hi_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_in_hum\t" );
+        builder.append( time_day_hi_in_hum );
+        builder.append( "\n" );
+
+        builder.append( "day_low_in_hum\t" );
+        builder.append( day_low_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_in_hum\t" );
+        builder.append( time_day_low_in_hum );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_in_hum\t" );
+        builder.append( month_hi_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "month_low_in_hum\t" );
+        builder.append( month_low_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_in_hum\t" );
+        builder.append( year_hi_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_in_hum\t" );
+        builder.append( year_low_in_hum );
+        builder.append( " " );
+        builder.append( humidity_units );
+        builder.append( "\n" );
+
+        /*
+         * Wind
+         */
+
+        builder.append( "wind_speed\t" );
+        builder.append( wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "wind_direction\t" );
+        builder.append( wind_direction );
+        builder.append( " " );
+        builder.append( wind_direction_units );
+        builder.append( "\n" );
+
+        builder.append( "ten_min_avg_wind_speed\t" );
+        builder.append( ten_min_avg_wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "two_min_avg_wind_speed\t" );
+        builder.append( two_min_avg_wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "ten_min_wind_gust\t" );
+        builder.append( ten_min_wind_gust );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "dir_ten_min_wind_gust\t" );
+        builder.append( wind_direction_of_ten_min_wind_gust );
+        builder.append( " " );
+        builder.append( wind_direction_units );
+        builder.append( "\n" );
+
+        builder.append( "wind_chill\t" );
+        builder.append( wind_chill );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "wind_chill_derived\t" );
+        builder.append( wind_chill_derived );
+        builder.append( "\n" );
+
+        builder.append( "daily_hi_wind_speed\t" );
+        builder.append( daily_hi_wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "time_of_hi_speed\t" );
+        builder.append( time_of_hi_speed );
+        builder.append( "\n" );
+
+        builder.append( "month_hi_wind_speed\t" );
+        builder.append( month_hi_wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "year_hi_wind_speed\t" );
+        builder.append( year_hi_wind_speed );
+        builder.append( " " );
+        builder.append( wind_speed_units );
+        builder.append( "\n" );
+
+        builder.append( "day_low_wind_chill\t" );
+        builder.append( day_low_wind_chill );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_low_chill\t" );
+        builder.append( time_day_low_chill );
+        builder.append( "\n" );
+
+        builder.append( "month_low_wind_chill\t" );
+        builder.append( month_low_wind_chill );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_wind_chill\t" );
+        builder.append( year_low_wind_chill );
+        builder.append( " " );
+        builder.append( temperature_units );
+        builder.append( "\n" );
+
+        /*
+         * Rain
+         */
+
+        builder.append( "storm_rain\t" );
+        builder.append( storm_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "start_date_curr_storm\t" );
+        builder.append( start_date_of_current_storm );
+        builder.append( "\n" );
+
+        builder.append( "rain_rate\t" );
+        builder.append( rain_rate );
+        builder.append( " " );
+        builder.append( rain_rate_units );
+        builder.append( "\n" );
+
+        builder.append( "last_fifteen_min_rain\t" );
+        builder.append( last_fifteen_min_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "last_hour_rain\t" );
+        builder.append( last_hour_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "daily_rain\t" );
+        builder.append( daily_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "last_24_hour_rain\t" );
+        builder.append( last_twenty_four_hour_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "month_rain\t" );
+        builder.append( month_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "year_rain\t" );
+        builder.append( year_rain );
+        builder.append( " " );
+        builder.append( rain_units );
+        builder.append( "\n" );
+
+        builder.append( "day_high_rain_rate\t" );
+        builder.append( day_high_rain_rate );
+        builder.append( " " );
+        builder.append( rain_rate_units );
+        builder.append( "\n" );
+
+        builder.append( "time_day_hi_rain_rate\t" );
+        builder.append( time_of_day_high_rain_rate );
+        builder.append( "\n" );
+
+        builder.append( "hour_high_rain_rate\t" );
+        builder.append( hour_high_rain_rate );
+        builder.append( " " );
+        builder.append( rain_rate_units );
+        builder.append( "\n" );
+
+        builder.append( "month_high_rain_rate\t" );
+        builder.append( month_high_rain_rate );
+        builder.append( " " );
+        builder.append( rain_rate_units );
+        builder.append( "\n" );
+
+        builder.append( "year_high_rain_rate\t" );
+        builder.append( year_high_rain_rate );
+        builder.append( " " );
+        builder.append( rain_rate_units );
+        builder.append( "\n" );
+
+        /*
+         * Barometer
+         */
+
+        builder.append( "barometer\t" );
+        builder.append( barometer );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "bar_trend\t" );
+        builder.append( bar_trend );
+        builder.append( "\n" );
+
+        builder.append( "daily_low_barometer\t" );
+        builder.append( daily_low_barometer );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "time_of_day_low_bar\t" );
+        builder.append( time_of_day_low_bar );
+        builder.append( "\n" );
+
+        builder.append( "daily_high_barometer\t" );
+        builder.append( daily_high_barometer );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "time_of_day_high_bar\t" );
+        builder.append( time_of_day_high_bar );
+        builder.append( "\n" );
+
+        builder.append( "month_low_bar\t" );
+        builder.append( month_low_bar );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "month_high_bar\t" );
+        builder.append( month_high_bar );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "year_low_barometer\t" );
+        builder.append( year_low_barometer );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        builder.append( "year_high_barometer\t" );
+        builder.append( year_high_barometer );
+        builder.append( " " );
+        builder.append( barometer_units );
+        builder.append( "\n" );
+
+        /*
+         * System
+         */
+
+        builder.append( "station_battery_status\t" );
+        builder.append( transmitter_battery_status );
+        builder.append( "\n" );
+
+        builder.append( "console_battery_voltage\t" );
+        builder.append( console_battery_voltage );
+        builder.append( " " );
+        builder.append( console_battery_voltage_units );
+        builder.append( "\n" );
+
+        return builder.toString();
+    }
+
     @Override
     public String toString()
     {
@@ -322,9 +896,8 @@ public class Weather_data
 
         builder.append( getClass().getName() );
         builder.append( "@" );
-        builder.append( String.format( "0x%08X",
-                                       hashCode() )
-                + "\n" );
+        builder.append( String.format( "0x%08X\n",
+                                       hashCode() ));
         builder.append( "[\n" );
 
         builder.append( "    system_name=" );
@@ -363,66 +936,82 @@ public class Weather_data
 
         builder.append( ",\n    barometer=" );
         builder.append( barometer );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    inside_temperature=" );
         builder.append( inside_temperature );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    inside_humidity=" );
         builder.append( inside_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    outside_temperature=" );
         builder.append( outside_temperature );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    wind_speed=" );
         builder.append( wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    wind_direction=" );
         builder.append( wind_direction );
+        builder.append( " " );
         builder.append( wind_direction_units );
 
         builder.append( ",\n    ten_min_avg_wind_speed=" );
         builder.append( ten_min_avg_wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    two_min_avg_wind_speed=" );
         builder.append( two_min_avg_wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    ten_min_wind_gust=" );
         builder.append( ten_min_wind_gust );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    wind_direction_of_ten_min_wind_gust=" );
         builder.append( wind_direction_of_ten_min_wind_gust );
+        builder.append( " " );
         builder.append( wind_direction_units );
 
         builder.append( ",\n    dew_point=" );
         builder.append( dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    outside_humidity=" );
         builder.append( outside_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    heat_index=" );
         builder.append( heat_index );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    wind_chill=" );
         builder.append( wind_chill );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    rain_rate=" );
         builder.append( rain_rate );
+        builder.append( " " );
         builder.append( rain_rate_units );
 
         builder.append( ",\n    storm_rain=" );
         builder.append( storm_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    start_date_of_current_storm=" );
@@ -430,22 +1019,27 @@ public class Weather_data
 
         builder.append( ",\n    daily_rain=" );
         builder.append( daily_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    last_fifteen_min_rain=" );
         builder.append( last_fifteen_min_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    last_hour_rain=" );
         builder.append( last_hour_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    daily_et=" );
         builder.append( daily_et );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    last_twenty_four_hour_rain=" );
         builder.append( last_twenty_four_hour_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         /*
@@ -453,10 +1047,12 @@ public class Weather_data
          */
         builder.append( ",\n    month_rain=" );
         builder.append( month_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    year_rain=" );
         builder.append( year_rain );
+        builder.append( " " );
         builder.append( rain_units );
 
         builder.append( ",\n    transmitter_battery_status=" );
@@ -464,6 +1060,7 @@ public class Weather_data
 
         builder.append( ",\n    console_battery_voltage=" );
         builder.append( console_battery_voltage );
+        builder.append( " " );
         builder.append( console_battery_voltage_units );
 
         /*
@@ -471,26 +1068,32 @@ public class Weather_data
          */
         builder.append( ",\n    daily_low_barometer=" );
         builder.append( daily_low_barometer );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    daily_high_barometer=" );
         builder.append( daily_high_barometer );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    month_low_bar=" );
         builder.append( month_low_bar );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    month_high_bar=" );
         builder.append( month_high_bar );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    year_low_barometer=" );
         builder.append( year_low_barometer );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    year_high_barometer=" );
         builder.append( year_high_barometer );
+        builder.append( " " );
         builder.append( barometer_units );
 
         builder.append( ",\n    time_of_day_low_bar=" );
@@ -501,6 +1104,7 @@ public class Weather_data
 
         builder.append( ",\n    daily_hi_wind_speed=" );
         builder.append( daily_hi_wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    time_of_hi_speed=" );
@@ -508,18 +1112,22 @@ public class Weather_data
 
         builder.append( ",\n    month_hi_wind_speed=" );
         builder.append( month_hi_wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    year_hi_wind_speed=" );
         builder.append( year_hi_wind_speed );
+        builder.append( " " );
         builder.append( wind_speed_units );
 
         builder.append( ",\n    day_hi_inside_temp=" );
         builder.append( day_hi_inside_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_low_inside_temp=" );
         builder.append( day_low_inside_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    time_day_hi_in_temp=" );
@@ -530,26 +1138,32 @@ public class Weather_data
 
         builder.append( ",\n    month_low_in_temp=" );
         builder.append( month_low_in_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    month_hi_in_temp=" );
         builder.append( month_hi_in_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_low_in_temp=" );
         builder.append( year_low_in_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_hi_in_temp=" );
         builder.append( year_hi_in_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_hi_in_hum=" );
         builder.append( day_hi_in_hum );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    day_low_in_hum=" );
         builder.append( day_low_in_hum );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    time_day_hi_in_hum=" );
@@ -560,10 +1174,12 @@ public class Weather_data
 
         builder.append( ",\n    month_hi_in_hum=" );
         builder.append( month_hi_in_hum );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    month_low_in_hum=" );
         builder.append( month_low_in_hum );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    year_hi_in_hum=" );
@@ -572,14 +1188,17 @@ public class Weather_data
 
         builder.append( ",\n    year_low_in_hum=" );
         builder.append( year_low_in_hum );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    day_low_out_temp=" );
         builder.append( day_low_out_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_hi_out_temp=" );
         builder.append( day_hi_out_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    time_day_low_out_temp=" );
@@ -590,14 +1209,17 @@ public class Weather_data
 
         builder.append( ",\n    month_hi_out_temp=" );
         builder.append( month_hi_out_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    month_low_out_temp=" );
         builder.append( month_low_out_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_hi_out_temp=" );
         builder.append( year_hi_out_temp );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_low_out_temp=" );
@@ -610,6 +1232,7 @@ public class Weather_data
 
         builder.append( ",\n    day_hi_dew_point=" );
         builder.append( day_hi_dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    time_day_low_dew_point=" );
@@ -620,22 +1243,27 @@ public class Weather_data
 
         builder.append( ",\n    month_hi_dew_point=" );
         builder.append( month_hi_dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    month_low_dew_point=" );
         builder.append( month_low_dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_hi_dew_point=" );
         builder.append( year_hi_dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_low_dew_point=" );
         builder.append( year_low_dew_point );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_low_wind_chill=" );
         builder.append( day_low_wind_chill );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    time_day_low_chill=" );
@@ -643,14 +1271,17 @@ public class Weather_data
 
         builder.append( ",\n    month_low_wind_chill=" );
         builder.append( month_low_wind_chill );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_low_wind_chill=" );
         builder.append( year_low_wind_chill );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_high_heat=" );
         builder.append( day_high_heat );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    time_of_day_high_heat=" );
@@ -658,10 +1289,12 @@ public class Weather_data
 
         builder.append( ",\n    month_high_heat=" );
         builder.append( month_high_heat );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    year_high_heat=" );
         builder.append( year_high_heat );
+        builder.append( " " );
         builder.append( temperature_units );
 
         builder.append( ",\n    day_high_rain_rate=" );
@@ -673,22 +1306,27 @@ public class Weather_data
 
         builder.append( ",\n    hour_high_rain_rate=" );
         builder.append( hour_high_rain_rate );
+        builder.append( " " );
         builder.append( rain_rate_units );
 
         builder.append( ",\n    month_high_rain_rate=" );
         builder.append( month_high_rain_rate );
+        builder.append( " " );
         builder.append( rain_rate_units );
 
         builder.append( ",\n    year_high_rain_rate=" );
         builder.append( year_high_rain_rate );
+        builder.append( " " );
         builder.append( rain_rate_units );
 
         builder.append( ",\n    day_low_humidity=" );
         builder.append( day_low_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    day_hi_humidity=" );
         builder.append( day_hi_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    time_day_low_humidity=" );
@@ -699,18 +1337,22 @@ public class Weather_data
 
         builder.append( ",\n    month_hi_humidity=" );
         builder.append( month_hi_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    month_low_humidity=" );
         builder.append( month_low_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    year_hi_humidity=" );
         builder.append( year_hi_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( ",\n    year_low_humidity=" );
         builder.append( year_low_humidity );
+        builder.append( " " );
         builder.append( humidity_units );
 
         builder.append( "\n]" );
