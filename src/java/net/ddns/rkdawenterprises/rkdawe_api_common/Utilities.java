@@ -59,6 +59,7 @@ import javax.crypto.spec.PBEKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
 
+@SuppressWarnings({"unused", "JavadocDeclaration"})
 public class Utilities
 {
     public static String hash_password( String password,
@@ -202,8 +203,7 @@ public class Utilities
                                                            zoned_date_time );
             Duration distance_to_ceiling = Duration.between( zoned_date_time,
                                                              ceiling );
-            ZonedDateTime rounded = distance_to_floor.compareTo( distance_to_ceiling ) < 0 ? floor : ceiling;
-            return rounded;
+            return distance_to_floor.compareTo( distance_to_ceiling ) < 0 ? floor : ceiling;
         }
     }
 
@@ -216,7 +216,7 @@ public class Utilities
      *
      * @param message         The message data to broadcast.
      * @param port            The UDP port to broadcast on.
-     * @param datagram_packet Container for the response to the broadcast.
+     * @param receive_datagram_packet Container for the response to the broadcast.
      *
      * @throws SocketException
      * @throws UnknownHostException
@@ -228,8 +228,7 @@ public class Utilities
     public static void send_UDP_broadcast( byte[] message,
                                            int port,
                                            DatagramPacket receive_datagram_packet )
-            throws SocketException, UnknownHostException, IllegalArgumentException, SecurityException, IOException,
-            SocketTimeoutException
+            throws SocketException, UnknownHostException, IllegalArgumentException, SecurityException, IOException
     {
         send_UDP_broadcast( message,
                             port,
@@ -257,7 +256,7 @@ public class Utilities
                 String host = interface_address.getAddress()
                                                .getHostAddress();
                 InetAddress broadcast = interface_address.getBroadcast();
-                if( host.equals( local_IP_address ) && broadcast != null )
+                if( ( host != null ) && host.equals( local_IP_address ) && ( broadcast != null ) )
                 {
                     return broadcast;
                 }
@@ -274,7 +273,7 @@ public class Utilities
      * @param message         The message data to broadcast.
      * @param port            The UDP port to broadcast on.
      * @param timeout         The socket timeout in milliseconds.
-     * @param datagram_packet Container for the response to the broadcast. Returns
+     * @param receive_datagram_packet Container for the response to the broadcast. Returns
      *                        the first response received that is not from
      *                        localhost.
      *
@@ -283,14 +282,12 @@ public class Utilities
      * @throws IllegalArgumentException
      * @throws SecurityException
      * @throws IOException
-     * @throws SocketTimeoutException
      */
     public static void send_UDP_broadcast( byte[] message,
                                            int port,
                                            DatagramPacket receive_datagram_packet,
                                            Duration timeout )
-            throws SocketException, UnknownHostException, IllegalArgumentException, SecurityException, IOException,
-            SocketTimeoutException
+            throws SocketException, UnknownHostException, IllegalArgumentException, SecurityException, IOException
     {
         String local_IP_address = get_local_IP_address();
         InetAddress broadcast_address = get_broadcast_address( local_IP_address );
@@ -311,7 +308,7 @@ public class Utilities
                 dsock.receive( receive_datagram_packet );
                 String received_from = receive_datagram_packet.getAddress()
                                                               .getHostAddress();
-                if( !received_from.equals( local_IP_address ) ) break;
+                if( ( received_from != null ) && !received_from.equals( local_IP_address ) ) break;
             }
         }
     }
@@ -337,7 +334,7 @@ public class Utilities
                                        int end_index )
             throws IndexOutOfBoundsException
     {
-        if( ( begin_index < 0 ) || ( end_index < 0 ) || ( end_index > source.length ) || ( begin_index > begin_index ) )
+        if( ( begin_index < 0 ) || ( end_index < 0 ) || ( end_index > source.length ) || ( begin_index > end_index ) )
         {
             throw new IndexOutOfBoundsException();
         }
@@ -369,9 +366,9 @@ public class Utilities
     public static String repeat( String string, int count )
     {
         if( ( string.length() == 0 ) || ( count == 0 ) ) return string;
-        String string_repeated = "";
-        for( int i = 0; i < count; i++ ) string_repeated += string;
-        return string_repeated;
+        StringBuilder string_repeated = new StringBuilder();
+        for( int i = 0; i < count; i++ ) string_repeated.append( string );
+        return string_repeated.toString();
     }
 
     public static void print_buffer( byte[] buffer,
@@ -383,7 +380,7 @@ public class Utilities
         System.out.printf( ">> %d bytes:%n",
                            size );
 
-        String line_chars = "";
+        StringBuilder line_chars = new StringBuilder();
 
         int i;
         for( i = 0; i < size; i++ )
@@ -392,27 +389,23 @@ public class Utilities
             {
                 if( i != 0 )
                 {
-                    if( line_chars.length() > 0 ) System.out.printf( "\"%s\"%n",
-                                                                     line_chars );
-                    line_chars = "";
+                    if( line_chars.length() > 0 ) System.out.printf( "\"%s\"%n", line_chars );
+                    line_chars.setLength(0);
                 }
 
-                System.out.printf( "    %04X ",
-                                   i );
+                System.out.printf( "    %04X ", i );
             }
 
-            System.out.printf( "%02X ",
-                               buffer[i] );
-            line_chars += Character.isISOControl( (char)buffer[i] ) ? "." : Character.toString( (char)buffer[i] );
+            System.out.printf( "%02X ", buffer[i] );
+            line_chars.append( Character.isISOControl( (char)buffer[i] ) ? "." : Character.toString( (char)buffer[i] ) );
         }
 
         int x = i % pitch;
         if( x != 0 )
         {
             if( line_chars.length() > 0 ) System.out.printf( "%s\"%s\"%n",
-                                                             repeat("   ", pitch - x ),
-                                                             line_chars );
-            line_chars = "";
+                                                             repeat("   ", pitch - x ), line_chars );
+            line_chars.setLength(0);
         }
         else
         {
@@ -424,9 +417,9 @@ public class Utilities
     /**
      * Currently does not work with negative durations.
      * 
-     * @param duration
+     * @param duration The given duration
      * 
-     * @return
+     * @return The string representation of the duration
      */
     public static String duration_to_string( Duration duration )
     {
@@ -536,9 +529,7 @@ public class Utilities
         {
             Thread.sleep( duration.toMillis() );
         }
-        catch( InterruptedException exception )
-        {
-        }
+        catch( InterruptedException ignored) {}
     }
 
     /**

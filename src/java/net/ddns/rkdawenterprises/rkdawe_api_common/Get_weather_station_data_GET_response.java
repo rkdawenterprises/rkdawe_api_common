@@ -50,6 +50,7 @@ public class Get_weather_station_data_GET_response
         return object;
     }
 
+    @SuppressWarnings("unused")
     public String serialize_to_JSON()
     {
         return serialize_to_JSON( this );
