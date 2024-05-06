@@ -6,6 +6,8 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
@@ -21,6 +23,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
+
 import javax.servlet.ServletContext;
 
 import org.apache.commons.io.FileUtils;
@@ -84,10 +87,10 @@ public class Server_utilities
         }
     }
 
-    public static Database_info get_database_info( ServletContext servlet_context ) throws IllegalArgumentException
+    public static Database_info get_database_info()
+        throws IllegalArgumentException, IOException
     {
-        String database_info_JSON_as_string = resource_file_to_string( "database_info.json",
-                                                                       servlet_context );
+        String database_info_JSON_as_string = Files.readString(Path.of("/opt/home/tomcat/database_info.json"));
         return Database_info.deserialize_from_JSON( database_info_JSON_as_string );
     }
 
@@ -104,7 +107,6 @@ public class Server_utilities
      * The DATETIME values in the database are assumed to be UTC, so all times
      * returned are also UTC.
      * 
-     * @param servlet_context The ServletContext for the current web application.
      * @param username
      * @param password
      * @param user            The User object to update with the database
@@ -114,17 +116,17 @@ public class Server_utilities
      * @throws ClassNotFoundException
      * @throws InvalidKeySpecException
      * @throws NoSuchAlgorithmException
+     * @throws IOException 
      */
-    public static void authenticate( ServletContext servlet_context,
-                                     String username,
+    public static void authenticate( String username,
                                      String password,
                                      User user )
             throws SQLException, ClassNotFoundException, NoSuchAlgorithmException, InvalidKeySpecException,
-            DateTimeException, IllegalArgumentException
+            DateTimeException, IllegalArgumentException, IOException
     {
         Class.forName( "com.mysql.cj.jdbc.Driver" );
 
-        Database_info database_info = get_database_info( servlet_context );
+        Database_info database_info = get_database_info();
         String database_URI = "jdbc:mysql://" + database_info.AUTHENTICATION_DATABASE_HOST + ":3306/"
                 + database_info.AUTHENTICATION_DATABASE_NAME + "?serverTimezone=UTC";
 
@@ -218,21 +220,21 @@ public class Server_utilities
      * user. The last invalid attempt and invalid attempts will be cleared as a
      * result.
      *
-     * @param servlet_context The ServletContext for the current web application.
      * @param an_ID           The database identifier of the user record to update
      *
      * @return The now at UTC time.
      *
      * @throws SQLException
      * @throws ClassNotFoundException
+     * @throws IOException 
+     * @throws IllegalArgumentException 
      */
-    public static Instant update_last_log_in( ServletContext servlet_context,
-                                              int an_ID )
-            throws SQLException, ClassNotFoundException
+    public static Instant update_last_log_in( int an_ID )
+            throws SQLException, ClassNotFoundException, IllegalArgumentException, IOException
     {
         Class.forName( "com.mysql.cj.jdbc.Driver" );
 
-        Database_info database_info = get_database_info( servlet_context );
+        Database_info database_info = get_database_info();
         String database_URI = "jdbc:mysql://" + database_info.AUTHENTICATION_DATABASE_HOST + ":3306/"
                 + database_info.AUTHENTICATION_DATABASE_NAME + "?serverTimezone=UTC";
 
@@ -275,7 +277,6 @@ public class Server_utilities
      * Updates the last log in time with now at UTC. Only meant to be called
      * immediately after authenticate with the database ID of the user.
      * 
-     * @param servlet_context  The ServletContext for the current web application.
      * @param an_ID            The database identifier of the user record to update
      * @param invalid_attempts The number of invalid attempts. This value will be
      *                         written to the database.
@@ -284,15 +285,16 @@ public class Server_utilities
      * 
      * @throws SQLException
      * @throws ClassNotFoundException
+     * @throws IOException 
+     * @throws IllegalArgumentException 
      */
-    public static Instant update_last_invalid_attempt( ServletContext servlet_context,
-                                                       int an_ID,
+    public static Instant update_last_invalid_attempt( int an_ID,
                                                        int invalid_attempts )
-            throws SQLException, ClassNotFoundException
+            throws SQLException, ClassNotFoundException, IllegalArgumentException, IOException
     {
         Class.forName( "com.mysql.cj.jdbc.Driver" );
 
-        Database_info database_info = get_database_info( servlet_context );
+        Database_info database_info = get_database_info();
         String database_URI = "jdbc:mysql://" + database_info.AUTHENTICATION_DATABASE_HOST + ":3306/"
                 + database_info.AUTHENTICATION_DATABASE_NAME + "?serverTimezone=UTC";
 
