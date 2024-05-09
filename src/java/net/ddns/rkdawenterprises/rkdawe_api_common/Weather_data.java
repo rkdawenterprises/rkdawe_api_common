@@ -27,6 +27,7 @@ import java.util.TimeZone;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 
 /**
  * Weather data from Davis Vantage Vue weather station serial API.
@@ -1543,7 +1544,7 @@ public class Weather_data
             object = m_GSON.fromJson( string_JSON,
                                       Weather_data.class );
         }
-        catch( com.google.gson.JsonSyntaxException exception )
+        catch( JsonSyntaxException exception )
         {
             System.out.println( "Bad data format for Weather_data: " + exception );
             System.out.println( ">>>" + string_JSON + "<<<" );

@@ -403,7 +403,7 @@ public class Utilities
 
     public static String repeat( String string, int count )
     {
-        if( ( string.length() == 0 ) || ( count == 0 ) ) return string;
+        if( (string.isEmpty()) || ( count == 0 ) ) return string;
         StringBuilder string_repeated = new StringBuilder();
         for( int i = 0; i < count; i++ ) string_repeated.append( string );
         return string_repeated.toString();
@@ -643,5 +643,16 @@ public class Utilities
         return DateTimeFormatter.ofPattern( pattern )
                 .format(convert_timestamp_to_local( timestamp_ms,
                         zone));
+    }
+
+    public static ZonedDateTime convert_time_to_local( ZonedDateTime time )
+    {
+        return time.withZoneSameInstant(ZoneId.of(TimeZone.getDefault().getID()));
+    }
+
+    public static String convert_time_to_local_string( ZonedDateTime time, String pattern )
+    {
+        return DateTimeFormatter.ofPattern( pattern )
+                .format( convert_time_to_local( time ) );
     }
 }
