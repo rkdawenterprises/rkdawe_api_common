@@ -17,7 +17,9 @@
 
 package net.ddns.rkdawenterprises.rkdawe_api_common;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -48,6 +50,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
@@ -58,6 +62,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
+
 
 @SuppressWarnings({"unused", "JavadocDeclaration"})
 public class Utilities
@@ -236,34 +241,67 @@ public class Utilities
                             DEFAULT_NETWORK_TIMEOUT );
     }
 
-    public static String get_local_IP_address() throws UnknownHostException
+    public static String get_local_IPV4_address(String system_type)
+        throws IllegalArgumentException, IOException
     {
-        return InetAddress.getLocalHost()
-                          .getHostAddress();
+        String address = null;
+
+        if(system_type.equalsIgnoreCase("LINUX"))
+        {
+            Process process = Runtime.getRuntime().exec("ip route");
+            try(BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream())))
+            {
+                final String regex = "^default\\svia\\s(?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\sdev\\s\\S+\\sproto\\sdhcp\\ssrc\\s((?:(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9])\\.){3}(?:25[0-5]|2[0-4][0-9]|1[0-9][0-9]|[1-9][0-9]|[0-9]))\\smetric\\s\\d+";
+                final Pattern pattern = Pattern.compile(regex, Pattern.MULTILINE);
+                String line = reader.readLine();
+                while(line != null)
+                {
+                    final Matcher matcher = pattern.matcher(line);
+                    if( matcher.find() && (matcher.groupCount() == 1) )
+                    {
+                        address = matcher.group(1);
+                        break;
+                    }
+
+                    line = reader.readLine();
+                }
+            }
+        }
+        else
+        {
+            throw new IllegalArgumentException("System type \"" + system_type + "\" is not implemented");
+        }
+
+        if(address != null) return address;
+
+        throw new UnknownHostException("Could not determine local host IP address");
     }
 
-    public static InetAddress get_broadcast_address( String local_IP_address )
-            throws UnknownHostException, SocketException
+    public static InetAddress get_broadcast_address( String a_local_IP_address )
+            throws UnknownHostException, SocketException, IllegalArgumentException 
     {
-        InetAddress address = InetAddress.getByName( local_IP_address );
+        InetAddress address = InetAddress.getByName( a_local_IP_address );
         NetworkInterface network_interface = NetworkInterface.getByInetAddress( address );
 
-        if( network_interface.isUp() && !network_interface.isLoopback() )
+        if( network_interface != null)
         {
-            List< InterfaceAddress > interface_addresses = network_interface.getInterfaceAddresses();
-            for( InterfaceAddress interface_address : interface_addresses )
+            if( network_interface.isUp() && !network_interface.isLoopback() )
             {
-                String host = interface_address.getAddress()
-                                               .getHostAddress();
-                InetAddress broadcast = interface_address.getBroadcast();
-                if( ( host != null ) && host.equals( local_IP_address ) && ( broadcast != null ) )
+                List< InterfaceAddress > interface_addresses = network_interface.getInterfaceAddresses();
+                for( InterfaceAddress interface_address : interface_addresses )
                 {
-                    return broadcast;
+                    String host = interface_address.getAddress()
+                                                .getHostAddress();
+                    InetAddress broadcast = interface_address.getBroadcast();
+                    if( ( host != null ) && host.equals( a_local_IP_address ) && ( broadcast != null ) )
+                    {
+                        return broadcast;
+                    }
                 }
             }
         }
 
-        return null;
+        throw new IllegalArgumentException( "Invalid local IP address, no interface for that address" );
     }
 
     /**
@@ -289,7 +327,7 @@ public class Utilities
                                            Duration timeout )
             throws SocketException, UnknownHostException, IllegalArgumentException, SecurityException, IOException
     {
-        String local_IP_address = get_local_IP_address();
+        String local_IP_address = get_local_IPV4_address("LINUX");
         InetAddress broadcast_address = get_broadcast_address( local_IP_address );
         if( broadcast_address == null ) throw new IllegalArgumentException( "Could not get broadcast address" );
 
