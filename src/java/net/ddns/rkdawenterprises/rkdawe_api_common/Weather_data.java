@@ -43,7 +43,7 @@ public class Weather_data
         HILOWS,
     }
 
-    public static final Gson m_GSON = new GsonBuilder().disableHtmlEscaping()
+    public static final Gson s_GSON = new GsonBuilder().disableHtmlEscaping()
                                                        .setPrettyPrinting()
                                                        .create();
 
@@ -903,6 +903,22 @@ public class Weather_data
                 console_battery_voltage +
                 " " +
                 console_battery_voltage_units +
+                "\n" +
+
+                /*
+                 * Forecast
+                 */
+
+                "Forecast" +
+                "\n" +
+ 
+                "period_1_forecast_icon\t" +
+                period_1_forecast_icon +
+                "\n" +
+ 
+                "period_1_short_forecast\t" +
+                period_1_short_forecast +
+
                 "\n";
     }
 
@@ -1279,26 +1295,30 @@ public class Weather_data
                 year_low_humidity +
                 " " +
                 humidity_units +
+                ",\n    period_1_forecast_icon=" +
+                period_1_forecast_icon +
+                ",\n    period_1_short_forecast=" +
+                period_1_short_forecast +
                 "\n]";
     }
 
-    /**
+    /*
      * The name of the weather station.
      */
     public String system_name = "Weather Station Donna @ Hot Springs, AR";
 
-    /**
+    /*
      * The time the weather data was retrieved as UTC.
      */
     public String time = "N/A";
 
-    /**
+    /*
      * Calculated heat-index and wind-chill.
      */
     public double heat_index_derived = Double.MAX_VALUE;
     public double wind_chill_derived = Double.MAX_VALUE;
 
-    /**
+    /*
      * Station information acquired during configuration.
      */
     public int wrd = Integer.MAX_VALUE;
@@ -1311,7 +1331,7 @@ public class Weather_data
     public String firmware_version = "N/A";
     public String DID = "N/A";
 
-    /**
+    /*
      * Measurement units
      */
     public String barometer_units = "in Hg";
@@ -1324,7 +1344,7 @@ public class Weather_data
     public String bar_trend = "N/A";
     public String console_battery_voltage_units = "Volts";
 
-    /**
+    /*
      * Loop2 packet data.
      */
     public double barometer = Double.MAX_VALUE;
@@ -1350,7 +1370,7 @@ public class Weather_data
     public double daily_et = Double.MAX_VALUE;
     public double last_twenty_four_hour_rain = Double.MAX_VALUE;
 
-    /**
+    /*
      * Loop packet data.
      */
     public double month_rain = Double.MAX_VALUE;
@@ -1358,7 +1378,7 @@ public class Weather_data
     public String transmitter_battery_status = "N/A";
     public double console_battery_voltage = Double.MAX_VALUE;
 
-    /**
+    /*
      * HILOWS packet data.
      */
     public double daily_low_barometer = Double.MAX_VALUE;
@@ -1435,6 +1455,12 @@ public class Weather_data
     public int month_low_humidity = Integer.MAX_VALUE;
     public int year_hi_humidity = Integer.MAX_VALUE;
     public int year_low_humidity = Integer.MAX_VALUE;
+
+    /*
+     * Forecast data
+     */
+    public String period_1_forecast_icon = "N/A";
+    public String period_1_short_forecast = "N/A";
 
     /**
      * Converts two bytes to a signed short value.
@@ -1533,7 +1559,7 @@ public class Weather_data
 
     public static String serialize_to_JSON( Weather_data object )
     {
-        return m_GSON.toJson( object );
+        return s_GSON.toJson( object );
     }
 
     public static Weather_data deserialize_from_JSON( String string_JSON )
@@ -1541,7 +1567,7 @@ public class Weather_data
         Weather_data object = null;
         try
         {
-            object = m_GSON.fromJson( string_JSON,
+            object = s_GSON.fromJson( string_JSON,
                                       Weather_data.class );
         }
         catch( JsonSyntaxException exception )
