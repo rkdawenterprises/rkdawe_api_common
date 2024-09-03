@@ -62,6 +62,7 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
+import org.jetbrains.annotations.NotNull;
 
 
 @SuppressWarnings({"unused", "JavadocDeclaration"})
@@ -277,6 +278,7 @@ public class Utilities
         throw new UnknownHostException("Could not determine local host IP address");
     }
 
+    @NotNull
     public static InetAddress get_broadcast_address( String a_local_IP_address )
             throws UnknownHostException, SocketException, IllegalArgumentException 
     {
@@ -614,6 +616,9 @@ public class Utilities
         return local_tm;
     }
 
+    /**
+     * @throws java.time.format.DateTimeParseException
+     */
     public static String convert_time_UTC_to_local( String time_UTC, String pattern )
     {
         return DateTimeFormatter.ofPattern( pattern )

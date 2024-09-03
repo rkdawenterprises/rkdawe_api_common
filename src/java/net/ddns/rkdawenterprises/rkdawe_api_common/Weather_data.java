@@ -29,6 +29,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonSyntaxException;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Weather data from Davis Vantage Vue weather station serial API.
  * Has methods to decode and parse the packets transmitted from the station.
@@ -1562,6 +1564,7 @@ public class Weather_data
         return s_GSON.toJson( object );
     }
 
+    @Nullable
     public static Weather_data deserialize_from_JSON( String string_JSON )
     {
         Weather_data object = null;
