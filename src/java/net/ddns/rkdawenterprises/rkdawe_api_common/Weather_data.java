@@ -1461,6 +1461,9 @@ public class Weather_data
     /*
      * Forecast data
      */
+    public String forecast_location_coordinates = "N/A";
+    public String forecast_location_city = "N/A";
+    public String forecast_location_state = "N/A";
     public String period_1_forecast_icon = "N/A";
     public String period_1_short_forecast = "N/A";
 
