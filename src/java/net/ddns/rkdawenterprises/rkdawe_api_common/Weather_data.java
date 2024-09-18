@@ -1,6 +1,6 @@
 
 /*
- * Copyright (c) 2019-2023 RKDAW Enterprises and Ralph Williamson.
+ * Copyright (c) 2019-2024 RKDAW Enterprises and Ralph Williamson.
  *       email: rkdawenterprises@gmail.com
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -914,6 +914,18 @@ public class Weather_data
                 "Forecast" +
                 "\n" +
  
+                "forecast_location_coordinates\t" +
+                forecast_location_coordinates +
+                "\n" +
+
+                "forecast_location_city\t" +
+                forecast_location_city + 
+                "\n" +
+
+                "forecast_location_state\t" +
+                forecast_location_state +
+                "\n" +
+
                 "period_1_forecast_icon\t" +
                 period_1_forecast_icon +
                 "\n" +
@@ -1297,6 +1309,12 @@ public class Weather_data
                 year_low_humidity +
                 " " +
                 humidity_units +
+                ",\n    forecast_location_coordinates=" +
+                forecast_location_coordinates +
+                ",\n    forecast_location_city=" +
+                forecast_location_city + 
+                ",\n    forecast_location_state=" +
+                forecast_location_state +
                 ",\n    period_1_forecast_icon=" +
                 period_1_forecast_icon +
                 ",\n    period_1_short_forecast=" +
