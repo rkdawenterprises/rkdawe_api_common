@@ -53,6 +53,16 @@ public class Weather_data
     {
     }
 
+    /**
+     * Parses the serial data packets from the weather station and stores it in this object.
+     * 
+     * @param type The type of the packet data being parsed.
+     * @param packet The given packet data to parse.
+     * @param length The actual size of the packet data within the given byte array.
+     * 
+     * @throws IllegalArgumentException
+     * @throws ArithmeticException
+     */
     public void parse_packet( Type type,
                               byte[] packet,
                               int length )
@@ -341,6 +351,11 @@ public class Weather_data
         }
     }
 
+    /**
+     * Serializes object to a "Tab Separated Values" string for easier table generation.
+     * 
+     * @return The serialized object as a TSV string.
+     */
     public String to_display_TSV_string()
     {
         return "system_name\t" +
@@ -936,407 +951,31 @@ public class Weather_data
                 "\n";
     }
 
-    @NonNull
-    @Override
-    public String toString()
-    {
-        return getClass().getName() +
-                "@" +
-                String.format("0x%08X\n",
-                        hashCode()) +
-                "[\n" +
-                "    system_name=" +
-                system_name +
-                ",\n    time=" +
-                time +
-                ",\n    heat_index_derived=" +
-                heat_index_derived +
-                ",\n    wind_chill_derived=" +
-                wind_chill_derived +
-                ",\n    wrd=" +
-                wrd +
-                ",\n    total_packets_received=" +
-                total_packets_received +
-                ",\n    total_packets_missed=" +
-                total_packets_missed +
-                ",\n    number_of_resynchronizations=" +
-                number_of_resynchronizations +
-                ",\n    largest_number_packets_received_in_a_row=" +
-                largest_number_packets_received_in_a_row +
-                ",\n    number_of_CRC_errors_detected=" +
-                number_of_CRC_errors_detected +
-                ",\n    firmware_date_code=" +
-                firmware_date_code +
-                ",\n    firmware_version=" +
-                firmware_version +
-                ",\n    DID=" +
-                DID +
-
-                /*
-                 * Loop2 packet data.
-                 */
-                ",\n    bar_trend=" +
-                bar_trend +
-                ",\n    barometer=" +
-                barometer +
-                " " +
-                barometer_units +
-                ",\n    inside_temperature=" +
-                inside_temperature +
-                " " +
-                temperature_units +
-                ",\n    inside_humidity=" +
-                inside_humidity +
-                " " +
-                humidity_units +
-                ",\n    outside_temperature=" +
-                outside_temperature +
-                " " +
-                temperature_units +
-                ",\n    wind_speed=" +
-                wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    wind_direction=" +
-                wind_direction +
-                " " +
-                wind_direction_units +
-                ",\n    ten_min_avg_wind_speed=" +
-                ten_min_avg_wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    two_min_avg_wind_speed=" +
-                two_min_avg_wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    ten_min_wind_gust=" +
-                ten_min_wind_gust +
-                " " +
-                wind_speed_units +
-                ",\n    wind_direction_of_ten_min_wind_gust=" +
-                wind_direction_of_ten_min_wind_gust +
-                " " +
-                wind_direction_units +
-                ",\n    dew_point=" +
-                dew_point +
-                " " +
-                temperature_units +
-                ",\n    outside_humidity=" +
-                outside_humidity +
-                " " +
-                humidity_units +
-                ",\n    heat_index=" +
-                heat_index +
-                " " +
-                temperature_units +
-                ",\n    wind_chill=" +
-                wind_chill +
-                " " +
-                temperature_units +
-                ",\n    rain_rate=" +
-                rain_rate +
-                " " +
-                rain_rate_units +
-                ",\n    storm_rain=" +
-                storm_rain +
-                " " +
-                rain_units +
-                ",\n    start_date_of_current_storm=" +
-                start_date_of_current_storm +
-                ",\n    daily_rain=" +
-                daily_rain +
-                " " +
-                rain_units +
-                ",\n    last_fifteen_min_rain=" +
-                last_fifteen_min_rain +
-                " " +
-                rain_units +
-                ",\n    last_hour_rain=" +
-                last_hour_rain +
-                " " +
-                rain_units +
-                ",\n    daily_et=" +
-                daily_et +
-                " " +
-                rain_units +
-                ",\n    last_twenty_four_hour_rain=" +
-                last_twenty_four_hour_rain +
-                " " +
-                rain_units +
-
-                /*
-                 * Loop packet data.
-                 */
-                ",\n    month_rain=" +
-                month_rain +
-                " " +
-                rain_units +
-                ",\n    year_rain=" +
-                year_rain +
-                " " +
-                rain_units +
-                ",\n    transmitter_battery_status=" +
-                transmitter_battery_status +
-                ",\n    console_battery_voltage=" +
-                console_battery_voltage +
-                " " +
-                console_battery_voltage_units +
-
-                /*
-                 * HILOWS packet data.
-                 */
-                ",\n    daily_low_barometer=" +
-                daily_low_barometer +
-                " " +
-                barometer_units +
-                ",\n    daily_high_barometer=" +
-                daily_high_barometer +
-                " " +
-                barometer_units +
-                ",\n    month_low_bar=" +
-                month_low_bar +
-                " " +
-                barometer_units +
-                ",\n    month_high_bar=" +
-                month_high_bar +
-                " " +
-                barometer_units +
-                ",\n    year_low_barometer=" +
-                year_low_barometer +
-                " " +
-                barometer_units +
-                ",\n    year_high_barometer=" +
-                year_high_barometer +
-                " " +
-                barometer_units +
-                ",\n    time_of_day_low_bar=" +
-                time_of_day_low_bar +
-                ",\n    time_of_day_high_bar=" +
-                time_of_day_high_bar +
-                ",\n    daily_hi_wind_speed=" +
-                daily_hi_wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    time_of_hi_speed=" +
-                time_of_hi_speed +
-                ",\n    month_hi_wind_speed=" +
-                month_hi_wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    year_hi_wind_speed=" +
-                year_hi_wind_speed +
-                " " +
-                wind_speed_units +
-                ",\n    day_hi_inside_temp=" +
-                day_hi_inside_temp +
-                " " +
-                temperature_units +
-                ",\n    day_low_inside_temp=" +
-                day_low_inside_temp +
-                " " +
-                temperature_units +
-                ",\n    time_day_hi_in_temp=" +
-                time_day_hi_in_temp +
-                ",\n    time_day_low_in_temp=" +
-                time_day_low_in_temp +
-                ",\n    month_low_in_temp=" +
-                month_low_in_temp +
-                " " +
-                temperature_units +
-                ",\n    month_hi_in_temp=" +
-                month_hi_in_temp +
-                " " +
-                temperature_units +
-                ",\n    year_low_in_temp=" +
-                year_low_in_temp +
-                " " +
-                temperature_units +
-                ",\n    year_hi_in_temp=" +
-                year_hi_in_temp +
-                " " +
-                temperature_units +
-                ",\n    day_hi_in_hum=" +
-                day_hi_in_hum +
-                " " +
-                humidity_units +
-                ",\n    day_low_in_hum=" +
-                day_low_in_hum +
-                " " +
-                humidity_units +
-                ",\n    time_day_hi_in_hum=" +
-                time_day_hi_in_hum +
-                ",\n    time_day_low_in_hum=" +
-                time_day_low_in_hum +
-                ",\n    month_hi_in_hum=" +
-                month_hi_in_hum +
-                " " +
-                humidity_units +
-                ",\n    month_low_in_hum=" +
-                month_low_in_hum +
-                " " +
-                humidity_units +
-                ",\n    year_hi_in_hum=" +
-                year_hi_in_hum +
-                humidity_units +
-                ",\n    year_low_in_hum=" +
-                year_low_in_hum +
-                " " +
-                humidity_units +
-                ",\n    day_low_out_temp=" +
-                day_low_out_temp +
-                " " +
-                temperature_units +
-                ",\n    day_hi_out_temp=" +
-                day_hi_out_temp +
-                " " +
-                temperature_units +
-                ",\n    time_day_low_out_temp=" +
-                time_day_low_out_temp +
-                ",\n    time_day_hi_out_temp=" +
-                time_day_hi_out_temp +
-                ",\n    month_hi_out_temp=" +
-                month_hi_out_temp +
-                " " +
-                temperature_units +
-                ",\n    month_low_out_temp=" +
-                month_low_out_temp +
-                " " +
-                temperature_units +
-                ",\n    year_hi_out_temp=" +
-                year_hi_out_temp +
-                " " +
-                temperature_units +
-                ",\n    year_low_out_temp=" +
-                year_low_out_temp +
-                temperature_units +
-                ",\n    day_low_dew_point=" +
-                day_low_dew_point +
-                temperature_units +
-                ",\n    day_hi_dew_point=" +
-                day_hi_dew_point +
-                " " +
-                temperature_units +
-                ",\n    time_day_low_dew_point=" +
-                time_day_low_dew_point +
-                ",\n    time_day_hi_dew_point=" +
-                time_day_hi_dew_point +
-                ",\n    month_hi_dew_point=" +
-                month_hi_dew_point +
-                " " +
-                temperature_units +
-                ",\n    month_low_dew_point=" +
-                month_low_dew_point +
-                " " +
-                temperature_units +
-                ",\n    year_hi_dew_point=" +
-                year_hi_dew_point +
-                " " +
-                temperature_units +
-                ",\n    year_low_dew_point=" +
-                year_low_dew_point +
-                " " +
-                temperature_units +
-                ",\n    day_low_wind_chill=" +
-                day_low_wind_chill +
-                " " +
-                temperature_units +
-                ",\n    time_day_low_chill=" +
-                time_day_low_chill +
-                ",\n    month_low_wind_chill=" +
-                month_low_wind_chill +
-                " " +
-                temperature_units +
-                ",\n    year_low_wind_chill=" +
-                year_low_wind_chill +
-                " " +
-                temperature_units +
-                ",\n    day_high_heat=" +
-                day_high_heat +
-                " " +
-                temperature_units +
-                ",\n    time_of_day_high_heat=" +
-                time_of_day_high_heat +
-                ",\n    month_high_heat=" +
-                month_high_heat +
-                " " +
-                temperature_units +
-                ",\n    year_high_heat=" +
-                year_high_heat +
-                " " +
-                temperature_units +
-                ",\n    day_high_rain_rate=" +
-                day_high_rain_rate +
-                rain_rate_units +
-                ",\n    time_of_day_high_rain_rate=" +
-                time_of_day_high_rain_rate +
-                ",\n    hour_high_rain_rate=" +
-                hour_high_rain_rate +
-                " " +
-                rain_rate_units +
-                ",\n    month_high_rain_rate=" +
-                month_high_rain_rate +
-                " " +
-                rain_rate_units +
-                ",\n    year_high_rain_rate=" +
-                year_high_rain_rate +
-                " " +
-                rain_rate_units +
-                ",\n    day_low_humidity=" +
-                day_low_humidity +
-                " " +
-                humidity_units +
-                ",\n    day_hi_humidity=" +
-                day_hi_humidity +
-                " " +
-                humidity_units +
-                ",\n    time_day_low_humidity=" +
-                time_day_low_humidity +
-                ",\n    time_day_hi_humidity=" +
-                time_day_hi_humidity +
-                ",\n    month_hi_humidity=" +
-                month_hi_humidity +
-                " " +
-                humidity_units +
-                ",\n    month_low_humidity=" +
-                month_low_humidity +
-                " " +
-                humidity_units +
-                ",\n    year_hi_humidity=" +
-                year_hi_humidity +
-                " " +
-                humidity_units +
-                ",\n    year_low_humidity=" +
-                year_low_humidity +
-                " " +
-                humidity_units +
-                ",\n    forecast_location_coordinates=" +
-                forecast_location_coordinates +
-                ",\n    forecast_location_city=" +
-                forecast_location_city + 
-                ",\n    forecast_location_state=" +
-                forecast_location_state +
-                ",\n    period_1_forecast_icon=" +
-                period_1_forecast_icon +
-                ",\n    period_1_short_forecast=" +
-                period_1_short_forecast +
-                "\n]";
-    }
-
-    /*
+    /**
      * The name of the weather station.
      */
     public String system_name = "Weather Station Donna @ Hot Springs, AR";
 
-    /*
+    /**
      * The time the weather data was retrieved as UTC.
      */
     public String time = "N/A";
 
-    /*
-     * Calculated heat-index and wind-chill.
+    /**
+     * Calculated heat-index. This is updated anytime the 
      */
-    public double heat_index_derived = Double.MAX_VALUE;
-    public double wind_chill_derived = Double.MAX_VALUE;
+    private double heat_index_derived = Double.MAX_VALUE;
+
+    /**
+     * Calculated wind-chill. This is updated using {@link #calculate_wind_chill(double, double)} calculate_wind_chill}
+     * anytime the temperature or wind_speed is set.
+     */
+    private double wind_chill_derived = Double.MAX_VALUE;
+
+    public double get_wind_chill_derived()
+    {
+        return wind_chill_derived;
+    }
 
     /*
      * Station information acquired during configuration.
