@@ -160,6 +160,13 @@ public class Weather_data
                                                                  58 )
                     / 100;
 
+            heat_index_derived =
+                Weather_data.calculate_heat_index(outside_temperature,
+                                                  outside_humidity);
+            wind_chill_derived =
+                Weather_data.calculate_wind_chill(outside_temperature,
+                                                  wind_speed );
+
             return;
         }
 
@@ -966,13 +973,18 @@ public class Weather_data
      */
     private double heat_index_derived = Double.MAX_VALUE;
 
+    public double getHeat_index_derived()
+    {
+        return heat_index_derived;
+    }
+
     /**
      * Calculated wind-chill. This is updated using {@link #calculate_wind_chill(double, double)} calculate_wind_chill}
      * anytime the temperature or wind_speed is set.
      */
     private double wind_chill_derived = Double.MAX_VALUE;
 
-    public double get_wind_chill_derived()
+    public double getWind_chill_derived()
     {
         return wind_chill_derived;
     }
@@ -1009,8 +1021,44 @@ public class Weather_data
     public double barometer = Double.MAX_VALUE;
     public double inside_temperature = Double.MAX_VALUE;
     public int inside_humidity = Integer.MAX_VALUE;
-    public double outside_temperature = Double.MAX_VALUE;
-    public int wind_speed = Integer.MAX_VALUE;
+    
+    private double outside_temperature = Double.MAX_VALUE;
+    private int wind_speed = Integer.MAX_VALUE;
+
+    public double getOutside_temperature()
+    {
+        return outside_temperature;
+    }
+
+    public int getWind_speed()
+    {
+        return wind_speed;
+    }
+
+    public void setOutside_temperature(double temperature)
+    {
+        outside_temperature = temperature;
+
+        heat_index_derived =
+            Weather_data.calculate_heat_index(outside_temperature,
+                                              outside_humidity);
+        wind_chill_derived =
+            Weather_data.calculate_wind_chill(outside_temperature,
+                                              wind_speed );                                                                                           
+    }
+
+    public void setWind_speed(int speed)
+    {
+        wind_speed = speed;
+
+        heat_index_derived =
+            Weather_data.calculate_heat_index(outside_temperature,
+                                              outside_humidity);
+        wind_chill_derived =
+            Weather_data.calculate_wind_chill(outside_temperature,
+                                              wind_speed );                                                                                           
+    }
+
     public int wind_direction = Integer.MAX_VALUE;
     public double ten_min_avg_wind_speed = Double.MAX_VALUE;
     public double two_min_avg_wind_speed = Double.MAX_VALUE;
